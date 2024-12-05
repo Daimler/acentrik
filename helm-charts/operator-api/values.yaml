@@ -1,10 +1,10 @@
 ## namespace
-namespace: ocean-operator
+namespace: "{{instance_name}}-ocean-operator"
 
 ## market image version
 image:
   repository: public.ecr.aws/acentrik/oceanprotocol/operator-service
-  tag: ak-v1.0.0
+  tag: 3.1.0
   ## Specify a imagePullPolicy
   pullPolicy: Always
 
@@ -19,32 +19,40 @@ postgresql:
 ## ref: https://secrets-store-csi-driver.sigs.k8s.io
 ## ref: https://github.com/aws/secrets-store-csi-driver-provider-aws
 secretstore:
-  enabled: false
+  enabled: true
   provider: aws
 
 ## Secret relevant values or keys, depends on secretstore flag
 secret:
   postgres:
     db:
-      postgresdb
-      #objectName: parameter name
-      #objectType: "secretsmanager" or "ssmparameter"
-    user: postgresadmin
-    password: changeme
-    host: postgresql.ocean-operator.svc.cluster.local
-    port: "5432"
+      objectName: /{{instance_name}}/acentrik/core/db/postgres/operator
+      objectType: ssmparameter
+    user:
+      objectName: /{{instance_name}}/acentrik/core/db/postgres/operator/username
+      objectType: ssmparameter
+    password:
+      objectName: /{{instance_name}}/acentrik/core/db/postgres/operator/password
+      objectType: ssmparameter
+    host:
+      objectName: /{{instance_name}}/acentrik/core/db/postgres/host
+      objectType: ssmparameter
+    port:
+      objectName: /{{instance_name}}/acentrik/core/db/postgres/port
+      objectType: ssmparameter
+    # Addded dummy values temporarily below to move past error as secret-providerclass is failing - 18-Aug-2023
   ipfs:
-    apiKey:
-    apiClient:
+    apiKey : false
+    apiClient : false
 
 ## ConfigMap and secret relevant values
 config:
-  operatorAddress: ""
+  operatorAddress: 0x7397AcbE29027642F6242b08F022835E9cFC2E6A
   algoPodTimeout: "3600"
   storageExpiry: "5184000"
   signatureRequired: "0"
   allowedProviders: ""
-  defaultNamespace: ocean-compute
+  defaultNamespace: "{{instance_name}}-ocean-compute"
   resource:
     inputVolumeSize: "1Gi"
     outputVolumeSize: "1Gi"
@@ -57,11 +65,11 @@ config:
     level: INFO
 
 podAutoScaler:
-  enabled: false
+  enabled: true
   resource:
-    averageUtilization: "70"
+    averageUtilization: "200"
   minReplicas: "1"
-  maxReplicas: "3"
+  maxReplicas: "4"
 
 service:
   servicePort: 8050
@@ -134,10 +142,10 @@ readinessProbe:
   failureThreshold: 10
   successThreshold: 1
 ## Configure pod resources
-# resources:
-#   limits:
-#     cpu: 500m
-#     memory: 500Mi
-#   requests:
-#     cpu: 500m
-#     memory: 500Mi
+resources:
+  limits:
+    cpu: 500m
+    memory: 1024Mi
+  requests:
+    cpu: 200m
+    memory: 128Mi
