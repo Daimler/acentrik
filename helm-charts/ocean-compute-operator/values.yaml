@@ -60,8 +60,8 @@ config:
     expiryTime: "1440h"
   storageClass: standard
   pod:
-    configurationContainer: public.ecr.aws/acentrik/oceanprotocol/pod-configuration:new_timesout-1000
-    publishContainer: public.ecr.aws/acentrik/oceanprotocol/pod-publishing:v4main
+    configurationContainer: public.ecr.aws/acentrik/oceanprotocol/pod-configuration:3.1.0
+    publishContainer: public.ecr.aws/acentrik/oceanprotocol/pod-publishing:3.1.0
   log:
     level: INFO
   debug:
