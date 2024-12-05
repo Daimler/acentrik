@@ -28,23 +28,18 @@ secret:
     db:
       objectName: /{{instance_name}}/acentrik/core/db/postgres/operator
       objectType: ssmparameter
-      objectVersionLabel: "{{parameter_label}}"
     user:
       objectName: /{{instance_name}}/acentrik/core/db/postgres/operator/username
       objectType: ssmparameter
-      objectVersionLabel: "{{parameter_label}}"
     password:
       objectName: /{{instance_name}}/acentrik/core/db/postgres/operator/password
       objectType: ssmparameter
-      objectVersionLabel: "{{parameter_label}}"
     host:
       objectName: /{{instance_name}}/acentrik/core/db/postgres/host
       objectType: ssmparameter
-      objectVersionLabel: "{{parameter_label}}"
     port:
       objectName: /{{instance_name}}/acentrik/core/db/postgres/port
       objectType: ssmparameter
-      objectVersionLabel: "{{parameter_label}}"
     # Addded dummy values temporarily below to move past error as secret-providerclass is failing - 18-Aug-2023
   ipfs:
     apiKey : false

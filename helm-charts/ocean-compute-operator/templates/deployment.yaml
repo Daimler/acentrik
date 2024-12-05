@@ -20,7 +20,6 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
-        checksum/secret-providerclass: {{ include (print $.Template.BasePath "/secret-providerclass.yaml") . | sha256sum }}
     spec:
       containers:
       - env:
